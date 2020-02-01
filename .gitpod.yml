@@ -1,4 +1,4 @@
 # DO_NOT_MERGE: Remove this before merge
 
 image:
-  file: exhered-fill/Dockerfile
+  file: exhered-full/Dockerfile
