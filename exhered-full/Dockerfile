@@ -1,4 +1,4 @@
-FROM exherbo/exherbo-x86_64-pc-linux-gnu-base
+FROM exherbo/exherbo-x86_64-pc-linux-gnu-base:latest
 
 ENV LANG=en_US.UTF-8
 
