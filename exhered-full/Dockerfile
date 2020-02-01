@@ -9,3 +9,5 @@ RUN useradd \
 	--shell /bin/bash \
 	--password gitpod \
 	gitpod || exit 1
+
+USER root
