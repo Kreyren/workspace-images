@@ -19,4 +19,4 @@ RUN { groupadd --gid 33333 gitpod || exit 1 ;} && \
 	--gid gitpod \
 	--shell /bin/bash \
 	--password gitpod \
-	gitpod || exit 1 ;} && { usermod -a -G gitpod gitpod || exit 28 ;}
+	gitpod || exit 1 ;} && { usermod -a -G gitpod gitpod || exit 1 ;}
