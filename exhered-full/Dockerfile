@@ -19,3 +19,5 @@ RUN { groupadd --gid 33333 gitpod || exit 1 ;} && \
 	gitpod || exit 1 ;} && { usermod -a -G gitpod gitpod || exit 1 ;}
 
 WORKDIR /home/gitpod
+
+USER gitpod
