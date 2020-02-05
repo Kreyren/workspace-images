@@ -1,10 +1,10 @@
 FROM exherbo/exherbo-x86_64-pc-linux-gnu-base:latest
 
-/*
+RUN : "
 	Exherbo image for gitpod
 	
 	- Exherbo doesn't have addgroup -> Uses groupadd
-*/
+"
 
 USER root
 
