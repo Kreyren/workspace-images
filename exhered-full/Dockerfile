@@ -8,11 +8,11 @@ USER root
 ENV LANG=en_US.UTF-8
 
 # Add 'gitpod' user
-RUN addgroup() { exit 0 ;} ; { groupadd --gid 33333 gitpod || true ;} && \
+RUN addgroup() { exit 0 ;} ; { groupadd --gid 33333 gitpod || exit 1 ;} && \
 	{ useradd \
 	--uid 33333 \
 	--create-home --home-dir /home/gitpod \
-	--groups gitpod \
+	--gid gitpod \
 	--shell /bin/bash \
 	--password gitpod \
 	gitpod || exit 1 ;}
