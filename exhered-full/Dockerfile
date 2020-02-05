@@ -11,7 +11,7 @@ ENV LANG=en_US.UTF-8
 RUN for cmds in addgroup dpkg-query apt-get apk; do printf '%s\n' "# Added to pass gitpod build process" "exit 0" > "/usr/bin/$cmds"; done
 
 # Add 'gitpod' user
-RUN { groupadd --gid 33333 gitpod || exit 27;} && \
+RUN { groupadd --gid 33333 gitpod || exit 1 ;} && \
 	{ useradd \
 	--no-log-init \
 	--uid 33333 \
@@ -19,4 +19,4 @@ RUN { groupadd --gid 33333 gitpod || exit 27;} && \
 	--gid gitpod \
 	--shell /bin/bash \
 	--password gitpod \
-	gitpod || exit 28 ;}
+	gitpod || exit 1 ;} && { usermod -a -G gitpod gitpod || exit 28 ;}
