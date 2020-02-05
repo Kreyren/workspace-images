@@ -7,8 +7,11 @@ USER root
 
 ENV LANG=en_US.UTF-8
 
+# FOR THE EMPIRE! (https://github.com/gitpod-io/gitpod/issues/1179#issuecomment-582038789)
+RUN for cmds in addgroup dpkg-query apt-get apk; do printf '%s\n' "# Added to pass gitpod build process" "exit 0" > "/usr/bin/$cmds"; done
+
 # Add 'gitpod' user
-RUN addgroup() { exit 0 ;} ; { groupadd --gid 33333 gitpod || exit 1 ;} && \
+RUN { groupadd --gid 33333 gitpod || exit 1 ;} && \
 	{ useradd \
 	--uid 33333 \
 	--create-home --home-dir /home/gitpod \
