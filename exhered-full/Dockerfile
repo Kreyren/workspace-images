@@ -5,7 +5,7 @@ USER root
 ENV LANG=en_US.UTF-8
 
 # Add 'gitpod' user
-RUN { addgroup -g 33333 gitpod || exit 1 ;} && \
+RUN { groupadd --gid 33333 gitpod || exit 1 ;} && \
   { useradd \
 	--uid 33333 \
 	--create-home --home-dir /home/gitpod \
