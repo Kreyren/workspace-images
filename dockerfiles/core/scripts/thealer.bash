@@ -168,6 +168,7 @@ while [ "$#" -ge 1 ]; do case "$1" in
 			nim|git|nano|vim|emacs|htop|less|zip|unzip|tar|rustc|cargo|openbox|python|python3|pylint|golang|php|ruby|apache2|nginx|novnc|cppcheck|valgrind)
 				downMan "$2"
 				shift 1
+				if ! command -v emacs; then die 1 "No emacs!"; fi
 			;;
 			# APT specific
 			apt-transport-https|build-essentials)
@@ -180,6 +181,7 @@ while [ "$#" -ge 1 ]; do case "$1" in
 			shift 1
 			;;
 			# Shellcheck in debian stable is not usable, see https://github.com/gitpod-io/workspace-images/pull/204#issuecomment-614463958
+			# FIXME: Implement a logic that checks if shellcheck 0.7.0 lended in stable
 			shellcheck)
 				case "$DISTRO/$RELEASE" in
 					debian/stable)
