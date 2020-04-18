@@ -158,6 +158,8 @@ ebench start # Start benchmark
 
 # FIXME: Sanitize for package manager version used, i.e apt 2.0.0 changed how wildcards behave -> Simmilar change might break poor thealer
 
+die 1 ping 
+
 # Process packages from arguments
 # NOTICE: -ge is used because '0' is shell
 while [ "$#" -ge 1 ]; do case "$1" in
