@@ -158,58 +158,51 @@ ebench start # Start benchmark
 
 # FIXME: Sanitize for package manager version used, i.e apt 2.0.0 changed how wildcards behave -> Simmilar change might break poor thealer
 
-die 1 ping 
-
 # Process packages from arguments
 # NOTICE: -ge is used because '0' is shell
 while [ "$#" -ge 1 ]; do case "$1" in
+	# FIXME: Allow passing multiple arguments to install subcommand
 	install)
-		case "$2" in
+		shift 1 # Shift 'install'
+		while [ "$#" -ge 1 ]; do case "$1" in
 			nim|git|nano|vim|emacs|htop|less|zip|unzip|tar|rustc|cargo|openbox|python|python3|pylint|golang|php|ruby|apache2|nginx|novnc|cppcheck|valgrind)
-			downMan "$2"
+				downMan "$2"
+				shift 1
+			;;
+			# APT specific
+			apt-transport-https|build-essentials)
+				case "$DISTRO/$RELEASE" in
+					debian/*|ubuntu/*)
+						apt install -y "$2" || die 1 "Unable to install package '$2'"
+					;;
+					*) edebug "Distribution '$DISTRO/$RELEASE' does not support apt specific package '$2'"
+				esac
 			shift 1
-		;;
-		# APT specific
-		apt-transport-https|build-essentials)
-			case "$DISTRO/$RELEASE" in
-				debian/*|ubuntu/*)
-					apt install -y "$2" || die 1 "Unable to install package '$2'"
-				;;
-				*) edebug "Distribution '$DISTRO/$RELEASE' does not support apt specific package '$2'"
-			esac
-		shift 1
-		;;
-		# Shellcheck in debian stable is not usable, see https://github.com/gitpod-io/workspace-images/pull/204#issuecomment-614463958
-		shellcheck)
-			case "$DISTRO/$RELEASE" in
-				debian/stable)
-					apt install -t testing -y "$2" || die 1 "Unable to install package '$2'"
-				;;
-				*)
-					downMan "$2"
-			esac
-		shift 1
-		;;
-		# Portage specific
-		gentoolkit|app-portage/gentoolkit)
-			case "$DISTRO/$RELEASE" in
-				gentoo/*)
-					emerge -vuDNj "$2" || die 1 "Unable to install package '$2' on distribution '$DISTRO' with release '$RELEASE'"
-				;;
-				*) edebug "Distribution '$DISTRO/$RELEASE' does not support portage specific package '$2'"
-			esac
+			;;
+			# Shellcheck in debian stable is not usable, see https://github.com/gitpod-io/workspace-images/pull/204#issuecomment-614463958
+			shellcheck)
+				case "$DISTRO/$RELEASE" in
+					debian/stable)
+						apt install -t testing -y "$2" || die 1 "Unable to install package '$2'"
+					;;
+					*)
+						downMan "$2"
+				esac
 			shift 1
-		;;
-		*) die fixme "Package '$2' is not yet supported on $DISTRO/$RELEASE"
-		esac
-	;;
-	# DO_NOT_MERGE: Experiment
-	novnc)
-		downMan "$1"
-		shift 1
+			;;
+			# Portage specific
+			gentoolkit|app-portage/gentoolkit)
+				case "$DISTRO/$RELEASE" in
+					gentoo/*)
+						emerge -vuDNj "$2" || die 1 "Unable to install package '$2' on distribution '$DISTRO' with release '$RELEASE'"
+					;;
+					*) edebug "Distribution '$DISTRO/$RELEASE' does not support portage specific package '$2'"
+				esac
+				shift 1
+			;;
+			*) die fixme "Package '$2' is not yet supported on $DISTRO/$RELEASE"
+			esac; done
 	;;
 	"") exit 0 ;;
-	*)
-		die 2 "$1"
-		shift 1 # in case this does not exit
+	*) die 2 "$1"
 esac; done
