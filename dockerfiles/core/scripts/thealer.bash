@@ -98,6 +98,10 @@ manuallInstall() {
 downMan() {
 	# Convertion of expected packages (This may be different per distro)
 	case "$1" in
+		emacs|app-editors/emacs)
+			aptPackage="emacs"
+			exherboPackage="app-editors/emacs"
+			gentooPackage="app-editors/emacs" ;;
 		nim|dev-lang/nim)
 			aptPackage="nim/$RELEASE"
 			exherboPackage="dev-lang/nim"
@@ -118,13 +122,13 @@ downMan() {
 		"debian/stable"|"debian/testing"|"ubuntu/eoan")
 			# Check if package is available
 			# shellcheck disable=SC2154 # DO_NOT_MERGE: Check if this is still required
-			if printf '%s\n' "$aptList" | grep -m 1 -q "^aptPackage/$RELEASE.*"; then
+			if printf '%s\n' "$aptList" | grep -m 1 -q "^$aptPackage"; then
 				apt-get intall -y "$aptPackage" || manuallInstall "$aptPackage"
 				ebench result "installing package '$1' on $DISTRO with release $RELEASE using distro's downstream"
-			elif ! printf '%s\n' "$aptList" | grep -m 1 -q "^$1/$RELEASE.*"; then
+			elif ! printf '%s\n' "$aptList" | grep -m 1 -q "^$aptPackage"; then
 				manuallInstall "$aptPackage"
 			else
-				die 255 "Processing $1 in $DISTRO/$RELEASE"
+				die 255 "Processing $aptPackage in $DISTRO/$RELEASE"
 			fi
 		;;
 		exherbo/*)
