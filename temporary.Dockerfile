@@ -79,7 +79,7 @@ RUN true \
 
 # Install core dependencies
 # FIXME: We should allow logic based on expected 'shell' i.e using `shell: bash` in gitpod.yml should expand in installing bash-completion
-RUN true "ghsdfh" \
+RUN true "dsgash" \
 	&& chmod -x /usr/bin/thealer \
 	&& chmod +x /usr/bin/thealer \ 
 	&& thealer install emacs

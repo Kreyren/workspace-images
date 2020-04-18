@@ -60,11 +60,13 @@ efixme "Generating package lists, this takes too much time and has to be resolve
 # NOTICE: If the command is not found it complains about it -> Sent sterr in devnull
 # FIXME: This should be defined in dockerfile so that it's not generating everytime myName is called
 aptList="$(apt list 2>/dev/null)"
-paludisList="$(cave print-packages 2>/dev/null)"
+#paludisList="$(cave print-packages 2>/dev/null)"
 # NOTICE: We may need to use EIX_LIMIT=0 here to output all packages
-portageList="$(eix --only-names 2>/dev/null)"
+#portageList="$(eix --only-names 2>/dev/null)"
 # FIXME: Implement prebuilt binaries for merge
-binaryList=""
+#binaryList=""
+
+einfo "List generated"
 
 # DO_NOT_MERGE: Proper implementation needed
 DISTRO="debian"
