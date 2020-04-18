@@ -8,4 +8,4 @@ debian:
 	@ cat dockerfiles/default/append-dockerfile.Dockerfile >> temporary.Dockerfile
 
 test-thealer:
-	@ gp preview yolo && git add * && git commit -m "$$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" && git push && gp preview https://github.com/Kreyren/workspace-images/pull/1 
+	@ gp preview yolo && git add * && git commit -m "$$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" && git push && gp preview https://gitpod.io/#https://github.com/Kreyren/workspace-images/pull/1

@@ -82,7 +82,8 @@ ENV aptList="$(apt list 2>/dev/null)"
 
 # Install core dependencies
 # FIXME: We should allow logic based on expected 'shell' i.e using `shell: bash` in gitpod.yml should expand in installing bash-completion
-RUN true "dshasf5d4h65d" \
+RUN true "gfhdfgj" \
+	&& chmod +x /usr/bin/thealer \ 
 	&& thealer install emacs
 
 # Configure default NoVNC in theia
