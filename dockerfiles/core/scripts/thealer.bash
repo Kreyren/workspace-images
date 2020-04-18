@@ -123,7 +123,7 @@ downMan() {
 			# Check if package is available
 			# shellcheck disable=SC2154 # DO_NOT_MERGE: Check if this is still required
 			if printf '%s\n' "$aptList" | grep -m 1 -q "^$aptPackage"; then
-				apt-get intall -y "$aptPackage" || manuallInstall "$aptPackage"
+				apt-get install -y "$aptPackage" || manuallInstall "$aptPackage"
 				ebench result "installing package '$1' on $DISTRO with release $RELEASE using distro's downstream"
 			elif ! printf '%s\n' "$aptList" | grep -m 1 -q "^$aptPackage"; then
 				manuallInstall "$aptPackage"
