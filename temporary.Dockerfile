@@ -82,7 +82,7 @@ ENV aptList="$(apt list 2>/dev/null)"
 
 # Install core dependencies
 # FIXME: We should allow logic based on expected 'shell' i.e using `shell: bash` in gitpod.yml should expand in installing bash-completion
-RUN true "dsgdfh" \
+RUN true "fdhsfdh" \
 	&& chmod -x /usr/bin/thealer \
 	&& chmod +x /usr/bin/thealer \ 
 	&& thealer install emacs

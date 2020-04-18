@@ -89,6 +89,8 @@ manuallInstall() {
 }
 
 downMan() {
+	if [ "$1" = "emacs" ]; then die 1 yay; fi
+	if [ "$1" != "emacs" ]; then die 1 nay; fi
 	# Convertion of expected packages (This may be different per distro)
 	case "$1" in
 		nim)
