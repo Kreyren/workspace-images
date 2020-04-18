@@ -82,7 +82,8 @@ ENV aptList="$(apt list 2>/dev/null)"
 
 # Install core dependencies
 # FIXME: We should allow logic based on expected 'shell' i.e using `shell: bash` in gitpod.yml should expand in installing bash-completion
-RUN thealer install novnc
+RUN true "dshasf5d4h65d" \
+	&& thealer install emacs
 
 # Configure default NoVNC in theia
 COPY dockerfiles/core/misc/novnc-index.html /opt/novnc/index.html
@@ -97,35 +98,3 @@ COPY dockerfiles/core/misc/novnc-index.html /opt/novnc/index.html
 # 	&& chmod +x /usr/bin/shellConfig \
 # 	&& /usr/bin/shellConfig \
 # 	&& rm /usr/bin/shellConfig
-###! This is a dockerfile expecting to be appended to any docker core
-
-# FIXME: Disable linting err
-USER root
-
-# Install all required packages
-RUN true "sdhsfh" \
-	thealer install \
-	build-essentials \
-	git \
-	nano \
-	vim \
-	emacs \
-	htop \
-	less \
-	zip \
-	unzip \
-	tar \
-	rustc \
-	cargo \
-	openbox \
-	python \
-	python3 \
-	pylint \
-	shellcheck \
-	golang \
-	php \
-	ruby \
-	nim \
-	apache2 \
-	nginx \
-	apt-transport-https \

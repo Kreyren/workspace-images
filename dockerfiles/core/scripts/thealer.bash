@@ -65,8 +65,6 @@ portageList="$(eix --only-names 2>/dev/null)"
 # FIXME: Implement prebuilt binaries for merge
 binaryList=""
 
-echo ping
-
 manuallInstall() {
 	# In case we are able to merge in system using pre-compiled binary package
 	if [ "$binaryList" = "$1" ]; then
@@ -109,6 +107,7 @@ downMan() {
 	case "$DISTRO/$RELEASE" in
 		"debian/stable"|"debian/testing"|"ubuntu/eoan")
 			# Check if package is available
+			# shellcheck disable=SC2154 # DO_NOT_MERGE: Check if this is still required
 			if "$aptList" | grep -m 1 -q "^aptPackage/$RELEASE.*"; then
 				apt-get intall -y "$aptPackage" || manuallInstall "$aptPackage"
 				ebench result "installing package '$1' on $DISTRO with release $RELEASE using distro's downstream"
