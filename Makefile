@@ -9,3 +9,6 @@ debian:
 
 test-thealer:
 	@ gp preview about:blank && git add * && git commit -m "$$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" && git push && gp preview https://gitpod.io/#https://github.com/Kreyren/workspace-images/pull/1
+
+test-debian:
+	@ gp preview yolo && make debian && git add * && git commit -m "$$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" && git push && gp preview https://gitpod.io/#https://github.com/Kreyren/workspace-images/pull/1
