@@ -116,10 +116,10 @@ downMan() {
 		"debian/stable"|"debian/testing"|"ubuntu/eoan")
 			# Check if package is available
 			# shellcheck disable=SC2154 # DO_NOT_MERGE: Check if this is still required
-			if "$aptList" | grep -m 1 -q "^aptPackage/$RELEASE.*"; then
+			if printf '%s\n' "$aptList" | grep -m 1 -q "^aptPackage/$RELEASE.*"; then
 				apt-get intall -y "$aptPackage" || manuallInstall "$aptPackage"
 				ebench result "installing package '$1' on $DISTRO with release $RELEASE using distro's downstream"
-			elif ! "$aptList" | grep -m 1 -q "^$1/$RELEASE.*"; then
+			elif ! printf '%s\n' "$aptList" | grep -m 1 -q "^$1/$RELEASE.*"; then
 				manuallInstall "$aptPackage"
 			else
 				die 255 "Processing $1 in $DISTRO/$RELEASE"
@@ -127,14 +127,14 @@ downMan() {
 		;;
 		exherbo/*)
 			# Check if package is available
-			if "$paludisList" | grep -m 1 -q "^$exherboPackage\$"; then
+			if printf '%s\n' "$paludisList" | grep -m 1 -q "^$exherboPackage\$"; then
 				if ! cave print-ids -m '*/*::/' | grep -m 1 -q "^$exherboPackage-.*:.*::installed\$"; then
 					cave resolve "$1" -x || eerror "Distribution '$DISTRO' with release '$RELEASE' failed to install package '$1', using manuall installation" && manuallInstall "$1"
 					ebench result "installing package '$1' on '$DISTRO' with release '$RELEASE'"
 				elif cave print-ids -m '*/*::/' | grep -m 1 -q "^$exherboPackage-.*:.*::installed\$"; then
 					einfo "Package '$1' is already installed on distribution '$DISTRO' with release '$RELEASE', nothing else to do.."
 				fi
-			elif ! "$paludisList" | grep -m 1 -q "^$exherboPackage-.*:.*::installed"; then
+			elif ! printf '%s\n' "$paludisList" | grep -m 1 -q "^$exherboPackage-.*:.*::installed"; then
 				manuallInstall "$1"
 			else
 				die 255 "Processing '$1' in '$DISTRO/$RELEASE'"
@@ -142,7 +142,7 @@ downMan() {
 		;;
 		gentoo/*)
 			# Check if package is available
-			if "$portageList" | grep -m 1 -q "^$gentooPackage\$"; then
+			if printf '%s\n' "$portageList" | grep -m 1 -q "^$gentooPackage\$"; then
 				if ! eix-installed -a | grep -m 1 -q "^$gentooPackage-.*\$"; then
 					emerge -vuDNj "$gentooPackage" || manuallInstall "$1"
 				elif eix-installed -a | grep -m 1 -q "^$gentooPackage-.*\$"; then
@@ -150,7 +150,7 @@ downMan() {
 				else
 					die 255 
 				fi
-			elif ! "$portageList" | grep -m 1 -q "^$gentooPackage\$"; then
+			elif ! printf '%s\n' "$portageList" | grep -m 1 -q "^$gentooPackage\$"; then
 				manuallInstall "$1"
 			else
 				die 255 "Processing package '$1' in $DISTRO/$RELEASE"
