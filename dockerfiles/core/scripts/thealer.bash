@@ -89,8 +89,8 @@ manuallInstall() {
 }
 
 downMan() {
-	if [ "$1" = "emacs" ]; then die 1 yay; fi
-	if [ "$1" != "emacs" ]; then die 1 nay; fi
+	if [ "$1" = "emacs" ]; then die 1 yay "$1"; fi
+	if [ "$1" != "emacs" ]; then die 1 nay "$1"; fi
 	# Convertion of expected packages (This may be different per distro)
 	case "$1" in
 		nim)
@@ -168,7 +168,7 @@ while [ "$#" -ge 1 ]; do case "$1" in
 		shift 1 # Shift 'install'
 		while [ "$#" -ge 1 ]; do case "$1" in
 			nim|git|nano|vim|emacs|htop|less|zip|unzip|tar|rustc|cargo|openbox|python|python3|pylint|golang|php|ruby|apache2|nginx|novnc|cppcheck|valgrind)
-				downMan "$2"
+				downMan "$1"
 				shift 1
 				if ! command -v emacs; then die 1 "No emacs!"; fi
 			;;
@@ -176,9 +176,9 @@ while [ "$#" -ge 1 ]; do case "$1" in
 			apt-transport-https|build-essentials)
 				case "$DISTRO/$RELEASE" in
 					debian/*|ubuntu/*)
-						apt install -y "$2" || die 1 "Unable to install package '$2'"
+						apt install -y "$1" || die 1 "Unable to install package '$1'"
 					;;
-					*) edebug "Distribution '$DISTRO/$RELEASE' does not support apt specific package '$2'"
+					*) edebug "Distribution '$DISTRO/$RELEASE' does not support apt specific package '$1'"
 				esac
 			shift 1
 			;;
@@ -187,10 +187,10 @@ while [ "$#" -ge 1 ]; do case "$1" in
 			shellcheck)
 				case "$DISTRO/$RELEASE" in
 					debian/stable)
-						apt install -t testing -y "$2" || die 1 "Unable to install package '$2'"
+						apt install -t testing -y "$1" || die 1 "Unable to install package '$1'"
 					;;
 					*)
-						downMan "$2"
+						downMan "$1"
 				esac
 			shift 1
 			;;
