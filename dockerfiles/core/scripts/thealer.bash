@@ -65,6 +65,10 @@ portageList="$(eix --only-names 2>/dev/null)"
 # FIXME: Implement prebuilt binaries for merge
 binaryList=""
 
+# DO_NOT_MERGE: Proper implementation needed
+DISTRO="debian"
+RELEASE="stable"
+
 manuallInstall() {
 	# In case we are able to merge in system using pre-compiled binary package
 	if [ "$binaryList" = "$1" ]; then
@@ -91,15 +95,18 @@ manuallInstall() {
 downMan() {
 	# Convertion of expected packages (This may be different per distro)
 	case "$1" in
-		nim)
-			exherboPackage="sys-lang/nim"
+		nim|dev-lang/nim)
+			aptPackage="nim/$RELEASE"
+			exherboPackage="dev-lang/nim"
 			gentooPackage="dev-lang/nim" ;;
-		golang)
+		golang-go|dev-lang/go)
 			aptPackage="golang-go"
-			exherboPackage="$1" 
-			gentooPackage="$1" ;;
+			exherboPackage="dev-lang/go" 
+			gentooPackage="dev-lang/go" ;;
 		*)
-			exherboPackage="$1" 
+			eerror "Package '$1' does not have a known convertion, trying default"
+			aptPackage="$1"
+			exherboPackage="$1"
 			gentooPackage="$1" ;;
 	esac
 
@@ -148,6 +155,7 @@ downMan() {
 				die 255 "Processing package '$1' in $DISTRO/$RELEASE"
 			fi
 		;;
+		*) die 1 "Unexpected distro '$DISTRO' with release '$RELEASE' has been parsed in $myName wrapper"
 	esac
 
 	# Self-check
